@@ -1,13 +1,28 @@
 package me.dio.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "tb_user")
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
+    @OneToOne(cascade = CascadeType.ALL)
     private Account account;
-    private List<Feature> features = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Card card;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Feature> features = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<News> news = new ArrayList<>();
 
     public String getName() {
